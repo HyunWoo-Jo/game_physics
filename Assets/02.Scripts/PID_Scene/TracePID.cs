@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TracePID : MonoBehaviour
-{
+public class TracePID : MonoBehaviour {
 
     private Transform target;
+    private Rigidbody _rigidbody;
 
     public void SetTarget(Transform tr) {
         target = tr;
@@ -13,17 +13,16 @@ public class TracePID : MonoBehaviour
     Vector3 derivative_Et;
     Vector3 cur_error;
     Vector3 pre_error;
-    float kp = 3f;
-    float ki = 21f;
-    float kd = 2f;
-    float speed = 0.5f;
+    float kp = 4f;
+    float ki = 2f;
+    float kd = 0.01f;
+    float speed = 30f;
     Vector3 mv;
     readonly float timeRate = 0.01f;
     float timer;
-    Vector3 newAddPos;
     private IEnumerator Start() {
-
-        GetComponent<Rigidbody>().AddForce(transform.forward * 2000f);
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.AddForce(transform.forward * 2000f);
         yield return new WaitForSeconds(0.5f);
 
         while (true) {
@@ -38,7 +37,7 @@ public class TracePID : MonoBehaviour
 
             cur_error = target.position - transform.position;
 
-            if (cur_error.magnitude <= 2f) {
+            if(Vector3.Distance(transform.position, target.position) < 3f) {
                 Destroy(gameObject);
                 break;
             }
@@ -48,19 +47,11 @@ public class TracePID : MonoBehaviour
             mv = kp * cur_error + ki * derivative_Et + kd * _de;
             pre_error = cur_error;
 
-            newAddPos = Vector3.ClampMagnitude(mv, speed);
-            transform.position += newAddPos;
+            _rigidbody.AddForce(mv.normalized * speed);
 
             timer = 0;
             yield return null;
-            }
-    }
-
-
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("TARGET")) {
-            Destroy(this.gameObject);
         }
     }
 }
+  
