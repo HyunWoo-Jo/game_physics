@@ -1,5 +1,4 @@
-# game_physics
-game_physics
+# game_physics_math
 
 ***
 ## PID(Proportional-Integral-Differential controller)
