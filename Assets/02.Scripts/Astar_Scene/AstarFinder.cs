@@ -3,50 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PriorityQueue<T> {
-    private List<Tuple<T, float>> elements = new List<Tuple<T, float>>();
-
-    public int Count => elements.Count;
-
-    public void Enqueue(T item, float priority) {
-        elements.Add(Tuple.Create(item, priority));
-    }
-
-    public T Dequeue() {
-        if (elements.Count == 0) {
-            throw new InvalidOperationException("PriorityQueue is empty");
-        }
-
-        int bestIndex = 0;
-        for (int i = 1; i < elements.Count; i++) {
-            if (elements[i].Item2 < elements[bestIndex].Item2) {
-                bestIndex = i;
-            }
-        }
-
-        T bestItem = elements[bestIndex].Item1;
-        elements.RemoveAt(bestIndex);
-        return bestItem;
-    }
-
-    public bool Contains(T item) {
-        for (int i = 0; i < elements.Count; i++) {
-            if (EqualityComparer<T>.Default.Equals(elements[i].Item1, item)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-}
-
-public class Astar : MonoBehaviour
+public class AstarFinder : MonoBehaviour
 {
     public NodeSpawner nodeSpawner;
 
     private List<Vector2Int> path = new List<Vector2Int>();
 
     private bool isFind = false;
+
+
     private void Update() {
         if (Input.GetMouseButtonDown(0)) {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -70,11 +35,11 @@ public class Astar : MonoBehaviour
 
     private void FindAsta(Vector2Int startPos, Vector2Int targetPos) {
 
-        PriorityQueue<Node> openSet = new PriorityQueue<Node>();
-        HashSet<Node> closedSet = new HashSet<Node>();
+        PriorityQueue<GirdNode> openSet = new PriorityQueue<GirdNode>();
+        HashSet<GirdNode> closedSet = new HashSet<GirdNode>();
 
-        Node startNode = nodeSpawner.nodeMap_list[startPos.x][startPos.y];
-        Node targetNode = nodeSpawner.nodeMap_list[targetPos.x][targetPos.y];
+        GirdNode startNode = nodeSpawner.nodeMap_list[startPos.x][startPos.y];
+        GirdNode targetNode = nodeSpawner.nodeMap_list[targetPos.x][targetPos.y];
 
         startNode.G = 0;
         startNode.H = Vector2Int.Distance(startNode.pos, targetNode.pos);
@@ -85,14 +50,14 @@ public class Astar : MonoBehaviour
         isFind = false;
         path.Clear();
         while (openSet.Count > 0) {
-            Node currentNode = openSet.Dequeue();
+            GirdNode currentNode = openSet.Dequeue();
             closedSet.Add(currentNode);
             if(currentNode == targetNode) {
                 path.Add(targetPos);
                 isFind = true;
                 break;
             }
-            foreach(Node neighborNode in FindNeigborNodes(currentNode)) {
+            foreach(GirdNode neighborNode in FindNeigborNodes(currentNode)) {
                 if (closedSet.Contains(neighborNode)) continue;
                 if (neighborNode.obj == null) continue;
                 float G = currentNode.G + Vector2Int.Distance(currentNode.pos, neighborNode.pos);
@@ -114,7 +79,7 @@ public class Astar : MonoBehaviour
         Vector2Int findPos = targetPos;
         
         while (isFind) {
-            Node node = nodeSpawner.nodeMap_list[findPos.x][findPos.y];
+            GirdNode node = nodeSpawner.nodeMap_list[findPos.x][findPos.y];
             findPos = node.prePos;
             path.Add(findPos);
             if (findPos == startPos) break;
@@ -122,13 +87,12 @@ public class Astar : MonoBehaviour
 
     }
 
-    private List<Node> FindNeigborNodes(Node node) {
+    private List<GirdNode> FindNeigborNodes(GirdNode node) {
 
-        List<Node> neigbor_list = new List<Node>();
+        List<GirdNode> neigbor_list = new List<GirdNode>();
 
         //up
         if (node.pos.y + 1 < nodeSpawner.nodeSize.y) {
-            Node neNode = nodeSpawner.nodeMap_list[node.pos.x][node.pos.y + 1];
             neigbor_list.Add(nodeSpawner.nodeMap_list[node.pos.x][node.pos.y + 1]);
         }
         // right

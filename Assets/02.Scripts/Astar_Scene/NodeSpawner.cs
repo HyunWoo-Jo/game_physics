@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Node {
+public class GirdNode {
     public GameObject obj;
     public Vector2Int pos;
     public Vector2Int prePos;
@@ -13,11 +13,11 @@ public class NodeSpawner : MonoBehaviour
 {
     [SerializeField] GameObject nodePrefab;
     public Vector2Int nodeSize;
-    [HideInInspector] public List<List<Node>> nodeMap_list = new List<List<Node>>();
+    [HideInInspector] public List<List<GirdNode>> nodeMap_list = new List<List<GirdNode>>();
     [HideInInspector] public Vector2Int startIndex;
     private void Awake() {
         for (int x = 0; x < nodeSize.x; x++) {
-            nodeMap_list.Add(new List<Node>());
+            nodeMap_list.Add(new List<GirdNode>());
             for(int y= 0; y< nodeSize.y; y++) {
                 var obj = Instantiate(nodePrefab);
                 obj.transform.SetParent(transform);
@@ -27,7 +27,7 @@ public class NodeSpawner : MonoBehaviour
                 obj.transform.localEulerAngles = new Vector3(90, 0, 0);      
                 int ranValue = Random.Range(0, 6);
 
-                nodeMap_list[x].Add(new Node { obj = obj, pos = new Vector2Int(x, y) });
+                nodeMap_list[x].Add(new GirdNode { obj = obj, pos = new Vector2Int(x, y) });
                 if (x == nodeSize.x / 2 && y == nodeSize.y / 2) {
                     mat.color = Color.green;
                     startIndex = new Vector2Int(x, y);
