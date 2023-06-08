@@ -10,7 +10,7 @@ public class TracePID : MonoBehaviour {
     public void SetTarget(Transform tr) {
         target = tr;
     }
-    Vector3 derivative_Et;
+    Vector3 sum_Et;
     Vector3 cur_error;
     Vector3 pre_error;
     float kp = 4f;
@@ -33,7 +33,7 @@ public class TracePID : MonoBehaviour {
             }
 
             // PID
-            // MV(t) = Kp * e(t) + Ki * Differential(e(t)) + kd * de / dt
+            // MV(t) = Kp * e(t) + Ki * Sum(e(t)) + kd * de / dt
 
             cur_error = target.position - transform.position;
 
@@ -42,9 +42,9 @@ public class TracePID : MonoBehaviour {
                 break;
             }
 
-            derivative_Et += cur_error * timer;
+            sum_Et += cur_error * timer;
             var _de = (cur_error - pre_error) / timer;
-            mv = kp * cur_error + ki * derivative_Et + kd * _de;
+            mv = kp * cur_error + ki * sum_Et + kd * _de;
             pre_error = cur_error;
 
             _rigidbody.AddForce(mv.normalized * speed);
