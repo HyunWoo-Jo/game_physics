@@ -95,10 +95,9 @@ MonoBehaviour:
   lineRendererPrefab: {fileID: 6815827813497426408, guid: 34ef3082731c78e48b72d0f178862806, type: 3}
   costTextPrefabs: {fileID: 6552595501577034312, guid: a82c0c2fa614fcd468f4837e7e4108ea, type: 3}
   nodeList:
-  - index: 0
-    nextNode: {fileID: 0}
-    cost: 0
-    line_renderer: {fileID: 0}
+  - {fileID: 0}
+  nodeData: []
+  nodeData_reversed: []
 --- !u!65 &7557711792115548357
 BoxCollider:
   m_ObjectHideFlags: 0

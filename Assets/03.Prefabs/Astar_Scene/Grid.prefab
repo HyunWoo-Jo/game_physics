@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7929151992227255869}
   - component: {fileID: 1765963044124846102}
   m_Layer: 0
-  m_Name: Node
-  m_TagString: NODE
+  m_Name: Grid
+  m_TagString: GRID
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
