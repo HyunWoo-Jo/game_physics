@@ -34,6 +34,7 @@ foreach (GridData neighborNode in FindNeigborNodes(currentNode)) {
   neighborNode.H = Vector2Int.Distance(neighborNode.pos, targetPos);
   neighborNode.prePos = currentNode.pos;
   PaintNode(Color.yellow, neighborNode.pos);
+  closedSet[neighborNode.pos.x, neighborNode.pos.y] = true;
   openSet.Enqueue(neighborNode, neighborNode.H);
 }
 ```
