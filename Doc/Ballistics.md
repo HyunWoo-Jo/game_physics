@@ -37,7 +37,7 @@ T = (2 * v * sin(θ)) / g
 - g is the acceleration due to gravity.
 
 ---
-is the initial velocity of the projectile.(Vi)
+The initial velocity of the projectile.(Vi)
 ```
 vi = power / (50 * mass)
 ```
