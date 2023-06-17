@@ -27,7 +27,8 @@ https://github.com/HyunWoo-Jo/game_physics_math/assets/73084993/ac1149ce-21a1-40
 https://github.com/HyunWoo-Jo/game_physics_math/assets/73084993/cf71bdcb-45f2-4fa6-9654-28f1a00de760
 
 ***
-## Ballistrics
+## Ballistics
+- [Ballistics](/Doc/Ballistics.md)
 
 https://github.com/HyunWoo-Jo/game_physics_math/assets/73084993/118518e3-03cd-4751-9197-2f31ea0acd5f
 
